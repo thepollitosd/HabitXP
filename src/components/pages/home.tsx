@@ -34,12 +34,28 @@ export default function LandingPage() {
           <div className="flex items-center space-x-4">
             {user ? (
               <div className="flex items-center gap-4">
-                <Link to="/dashboard">
+                <Link to="/habits">
                   <Button
                     variant="ghost"
                     className="text-sm font-light hover:text-gray-500"
                   >
-                    Dashboard
+                    Habits
+                  </Button>
+                </Link>
+                <Link to="/leaderboards">
+                  <Button
+                    variant="ghost"
+                    className="text-sm font-light hover:text-gray-500"
+                  >
+                    Leaderboards
+                  </Button>
+                </Link>
+                <Link to="/social">
+                  <Button
+                    variant="ghost"
+                    className="text-sm font-light hover:text-gray-500"
+                  >
+                    Social
                   </Button>
                 </Link>
                 <DropdownMenu>
@@ -117,9 +133,9 @@ export default function LandingPage() {
               <Link to="/signup" className="flex items-center hover:underline">
                 Start your streak <ChevronRight className="h-4 w-4" />
               </Link>
-              <Link to="/" className="flex items-center hover:underline">
+              <a href="#howworks" className="flex items-center hover:underline">
                 How it works <ChevronRight className="h-4 w-4" />
-              </Link>
+              </a>
             </div>
 
             <div className="relative mt-8 bg-gradient-to-r from-green-100 to-purple-100 p-8 rounded-3xl shadow-lg overflow-hidden max-w-4xl mx-auto">
@@ -230,7 +246,7 @@ export default function LandingPage() {
         </section>
 
         {/* Features section */}
-        <section className="py-20 bg-[#f5f5f7] text-center">
+        <section className="py-20 bg-[#f5f5f7] text-center" id="howworks">
           <div className="max-w-[980px] mx-auto px-4">
             <h2 className="text-5xl font-semibold tracking-tight mb-1">
               How It Works

@@ -17,17 +17,7 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
               HabitXP
             </Link>
           </div>
-          <nav className="hidden md:flex items-center space-x-7 text-sm font-medium">
-            <Link to="/" className="hover:text-green-600 flex items-center">
-              <Flame className="mr-1 h-4 w-4" /> Habits
-            </Link>
-            <Link to="/" className="hover:text-green-600 flex items-center">
-              <Trophy className="mr-1 h-4 w-4" /> Leaderboards
-            </Link>
-            <Link to="/" className="hover:text-green-600 flex items-center">
-              <Users className="mr-1 h-4 w-4" /> Friends
-            </Link>
-          </nav>
+          <nav className="hidden md:flex items-center space-x-7 text-sm font-medium"></nav>
         </div>
       </header>
 
