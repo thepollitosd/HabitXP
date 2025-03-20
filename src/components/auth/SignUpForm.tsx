@@ -18,6 +18,13 @@ export default function SignUpForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError("");
+
+    if (password.length < 8) {
+      setError("Password must be at least 8 characters");
+      return;
+    }
+
     try {
       await signUp(email, password, fullName);
       toast({
@@ -26,8 +33,28 @@ export default function SignUpForm() {
         duration: 5000,
       });
       navigate("/login");
-    } catch (error) {
-      setError("Error creating account");
+    } catch (error: any) {
+      console.error("Signup error:", error);
+
+      // Handle specific database errors
+      if (
+        error?.message?.includes("duplicate key") ||
+        error?.message?.includes("already registered") ||
+        error?.message?.includes("unique constraint")
+      ) {
+        setError(
+          "This email is already registered. Please use a different email or try logging in.",
+        );
+      } else if (
+        error?.message?.includes("database") ||
+        error?.message?.includes("relation") ||
+        error?.message?.includes("violates foreign key constraint")
+      ) {
+        console.error("Detailed database error:", error);
+        setError("Database error. Please try again later or contact support.");
+      } else {
+        setError(error?.message || "Error creating account. Please try again.");
+      }
     }
   };
 

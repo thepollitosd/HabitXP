@@ -35,16 +35,29 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const signUp = async (email: string, password: string, fullName: string) => {
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: {
-          full_name: fullName,
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            full_name: fullName,
+          },
         },
-      },
-    });
-    if (error) throw error;
+      });
+
+      if (error) throw error;
+
+      // Check if user was created successfully
+      if (!data.user) {
+        throw new Error("Failed to create user account");
+      }
+
+      return data;
+    } catch (error) {
+      console.error("Error in signUp function:", error);
+      throw error;
+    }
   };
 
   const signIn = async (email: string, password: string) => {
