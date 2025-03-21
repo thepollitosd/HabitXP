@@ -202,7 +202,43 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_monthly_leaderboard: {
+        Args: {
+          limit_param: number
+        }
+        Returns: {
+          user_id: string
+          full_name: string
+          avatar_url: string
+          total_xp: number
+        }[]
+      }
+      get_total_xp: {
+        Args: {
+          user_id_param: string
+        }
+        Returns: number
+      }
+      get_weekly_leaderboard: {
+        Args: {
+          limit_param: number
+        }
+        Returns: {
+          user_id: string
+          full_name: string
+          avatar_url: string
+          total_xp: number
+        }[]
+      }
+      update_streak: {
+        Args: {
+          user_id_param: string
+        }
+        Returns: {
+          current_streak: number
+          longest_streak: number
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never

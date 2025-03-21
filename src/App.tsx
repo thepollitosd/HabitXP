@@ -9,6 +9,7 @@ import Home from "./components/pages/home";
 import { AuthProvider, useAuth } from "../supabase/auth";
 import { Toaster } from "./components/ui/toaster";
 import { LoadingScreen, LoadingSpinner } from "./components/ui/loading-spinner";
+import HabitDashboard from "./components/dashboard/HabitDashboard";
 
 function PrivateRoute({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();
@@ -40,11 +41,14 @@ function AppRoutes() {
           }
         />
         <Route
-          path="/success"
+          path="/habits"
           element={
-            <Success />
+            <PrivateRoute>
+              <HabitDashboard />
+            </PrivateRoute>
           }
         />
+        <Route path="/success" element={<Success />} />
       </Routes>
       {import.meta.env.VITE_TEMPO === "true" && useRoutes(routes)}
     </>

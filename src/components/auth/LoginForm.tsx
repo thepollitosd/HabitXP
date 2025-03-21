@@ -18,7 +18,7 @@ export default function LoginForm() {
   // Redirect if user is already logged in
   useEffect(() => {
     if (user && !loading) {
-      navigate("/dashboard");
+      navigate("/habits");
     }
   }, [user, loading, navigate]);
 
@@ -28,7 +28,7 @@ export default function LoginForm() {
     setError("");
     try {
       await signIn(email, password);
-      navigate("/dashboard");
+      navigate("/habits");
     } catch (error) {
       setError("Invalid email or password");
     } finally {
