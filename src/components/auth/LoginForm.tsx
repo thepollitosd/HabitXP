@@ -28,7 +28,7 @@ export default function LoginForm() {
     setError("");
     try {
       await signIn(email, password);
-      navigate("/habits");
+      navigate("/dashboard");
     } catch (error) {
       setError("Invalid email or password");
     } finally {

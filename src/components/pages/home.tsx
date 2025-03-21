@@ -116,7 +116,6 @@ export default function LandingPage() {
           </div>
         </div>
       </header>
-
       <main className="pt-12">
         {/* Hero section */}
         <section className="py-20 text-center">
@@ -358,7 +357,7 @@ export default function LandingPage() {
                 Join the competition <ChevronRight className="h-4 w-4" />
               </Link>
             </div>
-            <div className="mt-4 bg-white p-6 rounded-xl shadow-sm max-w-sm mx-auto">
+            <div className="mt-4 bg-white p-6 rounded-xl max-w-sm mx-auto shadow-sm">
               <div className="space-y-4">
                 <div className="flex items-center justify-between p-3 bg-green-50 rounded-lg">
                   <div className="flex items-center">
@@ -533,7 +532,6 @@ export default function LandingPage() {
           </div>
         </section>
       </main>
-
       {/* Footer */}
       <footer className="bg-[#f5f5f7] py-12 text-xs text-gray-500">
         <div className="max-w-[980px] mx-auto px-4">
