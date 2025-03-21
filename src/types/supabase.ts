@@ -9,6 +9,57 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      friend_invites: {
+        Row: {
+          created_at: string | null
+          expires_at: string | null
+          id: string
+          invite_code: string
+          sender_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          expires_at?: string | null
+          id?: string
+          invite_code: string
+          sender_id: string
+        }
+        Update: {
+          created_at?: string | null
+          expires_at?: string | null
+          id?: string
+          invite_code?: string
+          sender_id?: string
+        }
+        Relationships: []
+      }
+      friends: {
+        Row: {
+          created_at: string | null
+          friend_id: string
+          id: string
+          status: string
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          friend_id: string
+          id?: string
+          status: string
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          friend_id?: string
+          id?: string
+          status?: string
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       habit_completions: {
         Row: {
           completed_at: string
@@ -202,6 +253,31 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      accept_friend_invite: {
+        Args: {
+          invite_code_param: string
+          user_id_param: string
+        }
+        Returns: boolean
+      }
+      generate_friend_invite: {
+        Args: {
+          user_id_param: string
+        }
+        Returns: string
+      }
+      get_friends: {
+        Args: {
+          user_id_param: string
+        }
+        Returns: {
+          friend_id: string
+          full_name: string
+          avatar_url: string
+          total_xp: number
+          status: string
+        }[]
+      }
       get_monthly_leaderboard: {
         Args: {
           limit_param: number
@@ -229,6 +305,33 @@ export type Database = {
           avatar_url: string
           total_xp: number
         }[]
+      }
+      respond_to_friend_request: {
+        Args: {
+          user_id_param: string
+          requester_id: string
+          accept: boolean
+        }
+        Returns: boolean
+      }
+      search_users: {
+        Args: {
+          search_term: string
+          current_user_id: string
+        }
+        Returns: {
+          user_id: string
+          full_name: string
+          avatar_url: string
+          friendship_status: string
+        }[]
+      }
+      send_friend_request: {
+        Args: {
+          sender_id: string
+          recipient_id: string
+        }
+        Returns: boolean
       }
       update_streak: {
         Args: {

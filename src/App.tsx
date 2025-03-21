@@ -8,8 +8,10 @@ import Success from "./components/pages/success";
 import Home from "./components/pages/home";
 import { AuthProvider, useAuth } from "../supabase/auth";
 import { Toaster } from "./components/ui/toaster";
-import { LoadingScreen, LoadingSpinner } from "./components/ui/loading-spinner";
+import { LoadingScreen } from "./components/ui/loading-spinner";
 import HabitDashboard from "./components/dashboard/HabitDashboard";
+import AppLayout from "./components/layout/AppLayout";
+import FriendsTab from "./components/friends/FriendsTab";
 
 function PrivateRoute({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();
@@ -19,10 +21,10 @@ function PrivateRoute({ children }: { children: React.ReactNode }) {
   }
 
   if (!user) {
-    return <Navigate to="/" />;
+    return <Navigate to="/login" />;
   }
 
-  return <>{children}</>;
+  return <AppLayout>{children}</AppLayout>;
 }
 
 function AppRoutes() {
@@ -45,6 +47,26 @@ function AppRoutes() {
           element={
             <PrivateRoute>
               <HabitDashboard />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/friends"
+          element={
+            <PrivateRoute>
+              <div className="max-w-4xl mx-auto">
+                <FriendsTab />
+              </div>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/invite/:code"
+          element={
+            <PrivateRoute>
+              <div className="max-w-4xl mx-auto">
+                <FriendsTab />
+              </div>
             </PrivateRoute>
           }
         />

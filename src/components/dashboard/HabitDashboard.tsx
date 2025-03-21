@@ -126,6 +126,46 @@ export default function HabitDashboard() {
     }
 
     fetchLeaderboard();
+
+    // Subscribe to changes in the xp table
+    const xpSubscription = supabase
+      .channel("xp-changes")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "xp" },
+        () => fetchLeaderboard(),
+      )
+      .subscribe();
+
+    // Subscribe to changes in the streaks table
+    const streaksSubscription = supabase
+      .channel("streaks-changes")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "streaks" },
+        () => {
+          // Fetch streak data when it changes
+          supabase
+            .from("streaks")
+            .select("*")
+            .eq("user_id", user.id)
+            .single()
+            .then(({ data }) => {
+              if (data) {
+                setStreak({
+                  current: data.current_streak || 0,
+                  longest: data.longest_streak || 0,
+                });
+              }
+            });
+        },
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(xpSubscription);
+      supabase.removeChannel(streaksSubscription);
+    };
   }, [user, leaderboardPeriod]);
 
   // Handle habit creation
@@ -304,7 +344,7 @@ export default function HabitDashboard() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="max-w-6xl mx-auto space-y-6">
       {/* Celebration overlay */}
       <AnimatePresence>
         {showCelebration && (
@@ -415,8 +455,9 @@ export default function HabitDashboard() {
           )}
         </div>
 
-        {/* Leaderboard section */}
-        <div>
+        {/* Leaderboard and Friends section */}
+        <div className="space-y-6">
+          {/* Leaderboard */}
           <Card>
             <CardHeader className="pb-2">
               <CardTitle className="text-lg flex items-center justify-between">
@@ -447,6 +488,22 @@ export default function HabitDashboard() {
                     : "Monthly Leaders"
                 }
               />
+            </CardContent>
+          </Card>
+
+          {/* Friends section */}
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-lg flex items-center">
+                <Users className="h-5 w-5 mr-2 text-blue-500" />
+                Friends
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <FriendsList />
+                <InviteFriend />
+              </div>
             </CardContent>
           </Card>
         </div>
